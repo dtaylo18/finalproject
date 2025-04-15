@@ -582,12 +582,20 @@
     }
 
     function shareResults() {
-      const resultText = resultsGrid.join("\n");
-      const shareText = `Fish Wordle Results\n\n${resultText}`;
-      navigator.clipboard.writeText(shareText).then(() => {
-        alert("Results copied to clipboard! Share them on social media or with your friends.");
-      });
-    }
+  // Get the result text (for guesses)
+  const resultText = resultsGrid.join("\n");
+  
+  // Include the score and other details (like time taken)
+  const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+  const score = timeTaken + (guesses * guessMultiplier); // Weighted score based on guesses and time
+  const playerMessage = `🎮 Fish Wordle\n\n${resultText}\n\nScore: ${score.toFixed(2)} points\nTime: ${timeTaken}s`;
+
+  // Copy the results and score to the clipboard
+  navigator.clipboard.writeText(playerMessage).then(() => {
+    alert("Results with score copied to clipboard! Share them on social media or with your friends.");
+  });
+}
+
 
     function updateLeaderboard(score) {
       const playerName = prompt("Enter your name for the leaderboard:"); // Ask for player name
